@@ -1,0 +1,57 @@
+
+<div class='game-container' *ngIf="gameStateIsLoaded">
+    <div class="players-sidebar">
+        <h3 style="text-align:center;">Players</h3>
+        <hr/>
+    
+        <ul>
+            <li *ngFor="let player of gameState.players">{{player.playerName}}    {{player.score}}</li>
+        </ul>
+        <hr/>
+        <div class='sidebar-button'>
+            <button
+                mat-flat-button 
+                color="primary"
+                (click)="sendMessage()"
+            >Start Game!</button>
+        </div>
+        <div class='sidebar-button'>
+            <button
+                mat-stroked-button 
+                color="secondary"
+                (click)="leaveGameRoom()"
+            >Leave Room</button>
+        </div>
+    </div>
+    <div class="main-area">
+        <div class="game-area">
+            <h1 style="text-align:center;">Welcome to room {{roomName}}, {{nickname}}.</h1> 
+        </div>
+        <div class="chat-component" *ngIf="showChat()">
+                <ng-container *ngIf="gameService.gameState">
+                    <mat-card class="chat-window">
+                        <div ngClass="inner-chat"> 
+                            <div *ngFor="let message of gameService.gameState.chatHistory">
+                                {{message.time | date:'HH:mm'}}  {{message.playerName}} - {{message.message}}
+                            </div>
+                        </div>
+                    </mat-card>
+                </ng-container> 
+                <span class="chat-message-send-area"> 
+                    <input style="flex: 1 0 auto; margin-right: 2%;" [(ngModel)]="chatMessage" (keyup)="$event.keyCode == 13 && sendMessage()"/>
+                    <button
+                        class ="chat-button-send" 
+                        mat-raised-button 
+                        color="primary"
+                        (click)="sendMessage()"
+                    >Send</button>
+                </span>
+                
+            </div>
+    </div>
+    
+</div>
+<div class="loading-game-container" *ngIf="!gameStateIsLoaded">
+    <h1> Loading... </h1>
+</div>
+  

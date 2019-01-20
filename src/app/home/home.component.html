@@ -1,0 +1,35 @@
+<mat-grid-list cols="3" rowHeight="30%">
+  <mat-grid-tile [colspan]="3" [rowspan]="1"></mat-grid-tile>
+  <mat-grid-tile [colspan]="1" [rowspan]="1"></mat-grid-tile>
+  <mat-grid-tile [colspan]="1" [rowspan]="1">
+    <mat-card>
+      <form [formGroup]="form" (submit)="onEnterRoom()">
+        <mat-form-field>
+          <input 
+          matInput 
+          type="text" 
+          formControlName="nickname"
+          name="nickname"
+          placeholder="Your Nickname"/>
+          <mat-error *ngIf="form.get('nickname').invalid">Please enter a nickname! </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input 
+          matInput 
+          type="text" 
+          formControlName="roomName"
+          name="roomName"
+          placeholder="Room Name"/>
+          <mat-error *ngIf="form.get('roomName').invalid">Please enter the room you would like to join in!</mat-error>
+        </mat-form-field>
+        <button 
+          mat-raised-button 
+          color="accent" 
+          type="submit">Join Room
+        </button>
+      </form>
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="1" [rowspan]="1"></mat-grid-tile>
+  <mat-grid-tile [colspan]="3" [rowspan]="1"></mat-grid-tile>
+</mat-grid-list>
