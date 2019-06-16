@@ -6,5 +6,6 @@ html, body {
 body { 
   position: relative;
   margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
+  overflow: hidden;
 }
 @import "~@angular/material/prebuilt-themes/indigo-pink.css"; 

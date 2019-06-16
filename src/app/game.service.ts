@@ -29,6 +29,14 @@ export class GameService {
     });
   }
 
+  public observeGameErrors() {
+    return Observable.create((observer) => {
+      this.socket.on('error-messages', (message: string) => {
+          observer.next(message);
+      });
+    });
+  }
+
   public setConnectObservable() {
     return Observable.create((observer) => {
         this.socket.on('connect', () => {
@@ -51,7 +59,7 @@ export class GameService {
   public gameStateHandler(): Promise<any> {
     return new Promise((resolve) => {
       this.socket.on('update-game-state', (game: GameState) => {
-        console.log(`Initial game room state obtained successfully!`);
+        console.log(`Room game state updated successfully!`);
         this.gameState = game;
         resolve(game);
       });
@@ -72,5 +80,9 @@ export class GameService {
   public leaveGameRoom(roomName: string, playerName: string) {
     console.log(roomName, playerName);
     this.socket.emit('leave-game', roomName, playerName);
+  }
+
+  public startGame(roomName: string, playerName: string) {
+    this.socket.emit('start-game', roomName, playerName);
   }
 }

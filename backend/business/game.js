@@ -1,3 +1,7 @@
+const GameRound = require('./GameRound');
+const TOTAL_ROUNDS = 5;
+const MAX_GUESSES_PER_WORD = 6;
+
 class Games {
 
   constructor() {
@@ -17,10 +21,38 @@ class Games {
 
 class Game {
 
+  // round: {
+  //   word: 'cheese',
+  //   rightLetters: ['e', 'c'],
+  //   wrongLetters: ['z', 'd', 'f'],
+  //   currentPlayerIndex: 1
+  // },
+  // gamePhase: 'pre' | 'during' | 'after',
+  // roundNumber: 1 
+  // totalRounds: 5
+
+  
+
   constructor(roomName) {
     this.roomName = roomName;
     this.players = [];
     this.chatHistory = [];
+
+    this.round = {};
+    this.gamePhase = 'pre';
+    this.roundNumber = 0;
+    this.totalRounds = TOTAL_ROUNDS;
+    this.maxGuesses = MAX_GUESSES_PER_WORD;
+  }
+
+  startNewGameRound() {
+    this.round = new GameRound(this.maxGuesses);
+    this.gamePhase = 'during';
+    this.roundNumber += 1;
+
+    //CLEAR PLAYERS SCORE IF ITS LATEST ROUND!
+
+    console.log(this.round);
   }
 
   findPlayerByName(playerName) {
@@ -42,7 +74,7 @@ class Game {
     const playerIndex = this.findPlayerByName(playerName)
     if(!!playerIndex) {
       this.addChatMessage(playerName, "Has left the game");
-      this.players.splice(playerIndex, 1);
+      this.players = this.players.filter( item => item.playerName !== playerName );
       return true;
     }
     else {
