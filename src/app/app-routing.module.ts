@@ -5,6 +5,7 @@ import { GameComponent } from './game/game.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
+  {path: 'error/:errorType', component: HomeComponent},
   {path: 'game/:roomName/:nickname', component: GameComponent},
   {path: '**', component: HomeComponent }
 ];

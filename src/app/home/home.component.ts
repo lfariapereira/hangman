@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap, UrlSegment } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,9 +14,22 @@ export class HomeComponent implements OnInit {
   public roomName = 'room1';
   private form: FormGroup;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+    private route: ActivatedRoute) {}
 
   ngOnInit() {
+
+    this.route.url.subscribe( (url: UrlSegment[]) => {
+      this.route.paramMap.subscribe((paramMap: ParamMap) => {
+        /* Roomname and nickname must be provided, or the user will be redirected to the home room.*/
+        if (url[0] && url[0].path === 'error' && paramMap.has('errorType')) {
+          const errorType = paramMap.get('errorType');
+          console.log(errorType);
+        }
+      });
+    });
+
+
     this.form = new FormGroup({
       'nickname': new FormControl(null, {
         validators: [

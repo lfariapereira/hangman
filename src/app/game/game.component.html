@@ -11,25 +11,27 @@
                 </div>
             </li>
         </ul>
-        <hr/>
-        <div class='sidebar-button'>
+        <div *ngIf="game && game.gamePhase === 'pre'">
+            <hr/>
+            <div class='sidebar-button'>
             <button
                 mat-flat-button 
                 color="primary"
                 (click)="startGame()"
             >Start Game!</button>
-        </div>
-        <div class='sidebar-button'>
-            <button
-                mat-stroked-button 
-                color="secondary"
-                (click)="leaveGameRoom()"
-            >Leave Room</button>
+            </div>
+            <div class='sidebar-button'>
+                <button
+                    mat-stroked-button 
+                    color="secondary"
+                    (click)="leaveGameRoom()"
+                >Leave Room</button>
+            </div>
         </div>
     </div>
     <div class="main-area">
         <div class="game-area">
-            <h1 style="text-align:center;">Welcome to room {{roomName}}, {{nickname}}.</h1> 
+            <h1 style="text-align:center;">{{roomName}}</h1> 
 
             <h1 *ngIf="gameState.gamePhase == 'during'">Game started!!</h1>
         </div>

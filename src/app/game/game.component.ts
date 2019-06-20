@@ -52,9 +52,9 @@ export class GameComponent implements OnInit {
     this.gameService.observeGameErrors()
       .subscribe( message => {
 
-        if (message === 'join-game-in-progress-error'){
-          this.router.navigate(['/']);
-          console.log('Game already started!!!');
+        if (message === 'join-game-in-progress-error') {
+          this.router.navigate(['/error/in-progress-game']);
+          console.log('You cannot join a game already in progress!!!');
         }
       });
 
@@ -63,7 +63,7 @@ export class GameComponent implements OnInit {
 
       // Wait for the first state update message from the server before loading the client's page.
     this.gameService.gameStateHandler().then(async (game: GameState) => {
-      await new Promise(resolve => setTimeout(resolve, 500)); // Artificially waits for loading time =)
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Artificially waits for loading time =)
       this.gameStateIsLoaded = true;
       this.gameState = game;
     });

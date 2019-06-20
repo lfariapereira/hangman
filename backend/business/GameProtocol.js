@@ -15,8 +15,9 @@ class GameProtocol {
         socket.join(roomName);
         const game = gamesList.getGame(roomName);
 
-        // A player souldn't be able to join a game in progress.
-        if (game.gamePhase != 'pre') {
+        // A player can only join a game in progress that accounts him as a player.
+        if (game.gamePhase != 'pre' && !game.isPlayerInGame(playerName)) {
+          console.dir(game.players)
           socket.emit('error-messages', 'join-game-in-progress-error');
           return;
         }

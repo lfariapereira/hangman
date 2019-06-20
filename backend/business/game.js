@@ -27,6 +27,7 @@ class Game {
   //   wrongLetters: ['z', 'd', 'f'],
   //   currentPlayerIndex: 1
   // },
+  // players: [Ada, Bete]
   // gamePhase: 'pre' | 'during' | 'after',
   // roundNumber: 1 
   // totalRounds: 5
@@ -57,6 +58,10 @@ class Game {
 
   findPlayerByName(playerName) {
     return this.players.find( k => k.playerName == playerName)
+  }
+
+  isPlayerInGame(playerName) {
+    return this.players.find( k => k.playerName == playerName) !== undefined 
   }
 
   onPlayerJoin(playerName) {
