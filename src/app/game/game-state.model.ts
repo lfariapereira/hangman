@@ -8,6 +8,7 @@ export class GameState {
   public chatHistory: ChatMessage[];
 
   public gamePhase: GamePhaseType;
+  public round: GameRound;
 
 }
 
@@ -21,4 +22,14 @@ export interface ChatMessage {
 export interface Player {
   playerName: string;
   score: number;
+}
+
+export interface GameRound {
+  gameWord: {
+    word: string,
+    hints: string[]
+  };
+  rightLetters: string[];
+  wrongLetters: string[];
+  currentPlayerIndex: number;
 }

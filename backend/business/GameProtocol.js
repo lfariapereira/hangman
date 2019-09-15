@@ -16,20 +16,20 @@ class GameProtocol {
         const game = gamesList.getGame(roomName);
 
         // A player can only join a game in progress that accounts him as a player.
-        if (game.gamePhase != 'pre' && !game.isPlayerInGame(playerName)) {
+        if (game.gamePhase !== 'pre' && !game.isPlayerInGame(playerName)) {
           console.dir(game.players)
           socket.emit('error-messages', 'join-game-in-progress-error');
           return;
         }
 
         game.onPlayerJoin(playerName);
-        io.emit('update-game-state', game);
+        io.to(roomName).emit('update-game-state', game);
       },
 
       'leave-game': (roomName, playerName) => {
         const game = gamesList.getGame(roomName);
         game.onPlayerLeave(playerName);
-        io.emit('update-game-state', game);
+        io.to(roomName).emit('update-game-state', game);
         socket.leave(roomName);
       },
 
@@ -44,13 +44,13 @@ class GameProtocol {
         }
       
         game.startNewGameRound();
-        io.emit('update-game-state', game);
+        io.to(roomName).emit('update-game-state', game);
       },
 
       'chat-message': (roomName, playerName, message) => {
         const game = gamesList.getGame(roomName);
         game.addChatMessage(playerName, message);
-        io.emit('update-game-state', game);
+        io.to(roomName).emit('update-game-state', game);
       }
     }
 

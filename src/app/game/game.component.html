@@ -31,9 +31,26 @@
     </div>
     <div class="main-area">
         <div class="game-area">
-            <h1 style="text-align:center;">{{roomName}}</h1> 
+            <h1 style="text-align:center;">Room {{roomName}}</h1> 
 
-            <h1 *ngIf="gameState.gamePhase == 'during'">Game started!!</h1>
+            <div *ngIf="gameState.gamePhase === 'during'">
+                <app-game-guessable-word [game]="gameState"></app-game-guessable-word>
+            </div>
+            <div *ngIf="gameState.gamePhase !== 'during'">
+                    <mat-grid-list cols="3" rowHeight="70px">
+                            <mat-grid-tile [colspan]="3" [rowspan]="1"></mat-grid-tile>
+                            <mat-grid-tile [colspan]="3" [rowspan]="1">
+                                <h3>Waiting for the game to be started by one of the players...</h3>
+                            </mat-grid-tile>
+                            <mat-grid-tile [colspan]="3" [rowspan]="1">
+                                <button
+                                    mat-flat-button 
+                                    color="primary"
+                                    (click)="startGame()"
+                                >Start Game Now!</button>
+                            </mat-grid-tile>
+                        </mat-grid-list>
+            </div>
         </div>
         <div class="chat-component" *ngIf="showChat()">
                 <ng-container *ngIf="gameService.gameState">

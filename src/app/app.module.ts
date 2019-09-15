@@ -19,6 +19,7 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { GameComponent } from './game/game.component';
 import { GameService } from './game.service';
+import { GuessableWordComponent } from './game/guessable-word/guessable-word.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { GameService } from './game.service';
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    GameComponent
+    GameComponent,
+    GuessableWordComponent
   ],
   imports: [
     BrowserModule,

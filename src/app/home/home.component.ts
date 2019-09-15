@@ -14,6 +14,8 @@ export class HomeComponent implements OnInit {
   public roomName = 'room1';
   private form: FormGroup;
 
+  private frontendErrorType = '';
+
   constructor(private router: Router,
     private route: ActivatedRoute) {}
 
@@ -24,11 +26,10 @@ export class HomeComponent implements OnInit {
         /* Roomname and nickname must be provided, or the user will be redirected to the home room.*/
         if (url[0] && url[0].path === 'error' && paramMap.has('errorType')) {
           const errorType = paramMap.get('errorType');
-          console.log(errorType);
+          this.frontendErrorType = errorType;
         }
       });
     });
-
 
     this.form = new FormGroup({
       'nickname': new FormControl(null, {
@@ -42,6 +43,14 @@ export class HomeComponent implements OnInit {
         ]
       })
     });
+  }
+
+  mapErrors(): string {
+    if (this.frontendErrorType === 'in-progress-game') {
+      return 'You cannot join a game that is already in progress!';
+    } else {
+      return 'We are sorry - there is an error!';
+    }
   }
 
   onEnterRoom() {
